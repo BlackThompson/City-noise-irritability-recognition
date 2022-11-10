@@ -164,7 +164,10 @@ pd.reset_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)
 feature = pd.read_excel(r'./input/feature.xls')
 col = feature.columns[10:-1]
+name = feature.columns[1]
+# col = np.insert(col, 0, name)
 feature_use = feature[col]
+name_list = feature[name]
 k = 4
 
 feature_use = feature_use.to_numpy()
@@ -291,6 +294,12 @@ if __name__ == '__main__':
     # feature_test = feature_use[:1000]
     feature_use = np.delete(feature_use, [4074, 4076, 5223, 4071, 4075, 4080, 653, 4073, 5217, 5221, 14, 3108, 187,
                                           5689, 5312], axis=0)
+    # name_list从series转化为ndarray
+    name_list = name_list.values
+    name_list = np.delete(name_list, [4074, 4076, 5223, 4071, 4075, 4080, 653, 4073, 5217, 5221, 14, 3108, 187,
+                                      5689, 5312], axis=0)
+
+    # 进行K聚类
     centroids, clusterAssment = Kmeans(feature_use)
 
     # print(centroids)
@@ -299,8 +308,11 @@ if __name__ == '__main__':
 
     clusterAssment = pd.DataFrame(clusterAssment)
     centroids = pd.DataFrame(centroids)
+    name_list = pd.DataFrame(name_list)
 
+    name_list.columns = ['25s_file_name']
     clusterAssment.columns = ['level', 'distance']
+    clusterAssment = pd.concat([name_list, clusterAssment], axis=1)
     col = feature.columns[10:-1]
     centroids.columns = col
     centroids.to_csv(r"./output/centroids.csv")

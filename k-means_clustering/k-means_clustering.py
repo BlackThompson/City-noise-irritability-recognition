@@ -193,10 +193,21 @@ def init_centroid(dataset):
 
     # 第一个聚类点随机选取
     # 之后每个聚类点取到之前距离最大的点
-    centroid = np.zeros((4, feature_num))
 
-    index = int(np.random.uniform(0, voice_num))
-    centroid[0, :] = dataset[index, :]
+    # centroid = np.zeros((4, feature_num))
+    #
+    # index = int(np.random.uniform(0, voice_num))
+    # centroid[0, :] = dataset[index, :]
+    # centroid_0 = centroid[0, :]
+
+    centroid = np.zeros((4, feature_num))
+    # centroid[0, :] = cluster_mean(dataset)
+    # centroid_0 = centroid[0, :]
+    # centroid[0, :] = dataset[3036, :]
+    # centroid[0, :] = dataset[4067, :]
+    # centroid[0, :] = dataset[241, :]
+    centroid[0, :] = dataset[1175, :]
+
     centroid_0 = centroid[0, :]
 
     centroid_1 = centroid_0
@@ -292,12 +303,17 @@ def Kmeans(dataset):
 
 if __name__ == '__main__':
     # feature_test = feature_use[:1000]
-    feature_use = np.delete(feature_use, [4074, 4076, 5223, 4071, 4075, 4080, 653, 4073, 5217, 5221, 14, 3108, 187,
-                                          5689, 5312], axis=0)
+    outlier_index = [6, 14, 114, 115, 119, 158, 165, 177, 187, 193,
+                     195, 197, 198, 653, 800, 1096, 1100, 1255, 1256, 1257,
+                     1258, 1263, 1266, 1269, 1297, 1342, 1343, 1350, 1353, 2017,
+                     2091, 2436, 3039, 3105, 3106, 3108, 4071, 4072, 4073, 4074,
+                     4075, 4076, 4077, 4078, 4079, 4080, 4081, 5216, 5217, 5221,
+                     5222, 5223, 5224, 5225, 5304, 5305, 5308, 5311, 5312, 5313,
+                     5689]
+    feature_use = np.delete(feature_use, outlier_index, axis=0)
     # name_list从series转化为ndarray
     name_list = name_list.values
-    name_list = np.delete(name_list, [4074, 4076, 5223, 4071, 4075, 4080, 653, 4073, 5217, 5221, 14, 3108, 187,
-                                      5689, 5312], axis=0)
+    name_list = np.delete(name_list, outlier_index, axis=0)
 
     # 进行K聚类
     centroids, clusterAssment = Kmeans(feature_use)

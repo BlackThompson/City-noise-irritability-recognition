@@ -184,6 +184,13 @@ def cluster_mean(cluster):
     return np.mean(cluster, axis=0)
 
 
+# 对数据进行正态——标准化
+def feature_normalize(dataset):
+    mu = np.mean(dataset, axis=0)
+    sigma = np.std(dataset, axis=0)
+    return (dataset - mu) / sigma
+
+
 # 找到初始聚类点
 def init_centroid(dataset):
     # 特征总数，即列数
@@ -201,12 +208,16 @@ def init_centroid(dataset):
     # centroid_0 = centroid[0, :]
 
     centroid = np.zeros((4, feature_num))
+
+    # 找到一个比较偏远的值，离中心点的距离20左右
+
     # centroid[0, :] = cluster_mean(dataset)
     # centroid_0 = centroid[0, :]
     # centroid[0, :] = dataset[3036, :]
     # centroid[0, :] = dataset[4067, :]
     # centroid[0, :] = dataset[241, :]
-    centroid[0, :] = dataset[1175, :]
+
+    centroid[0, :] = dataset[6550, :]
 
     centroid_0 = centroid[0, :]
 
@@ -303,17 +314,28 @@ def Kmeans(dataset):
 
 if __name__ == '__main__':
     # feature_test = feature_use[:1000]
-    outlier_index = [6, 14, 114, 115, 119, 158, 165, 177, 187, 193,
-                     195, 197, 198, 653, 800, 1096, 1100, 1255, 1256, 1257,
-                     1258, 1263, 1266, 1269, 1297, 1342, 1343, 1350, 1353, 2017,
-                     2091, 2436, 3039, 3105, 3106, 3108, 4071, 4072, 4073, 4074,
-                     4075, 4076, 4077, 4078, 4079, 4080, 4081, 5216, 5217, 5221,
-                     5222, 5223, 5224, 5225, 5304, 5305, 5308, 5311, 5312, 5313,
-                     5689]
+    # outlier_index = [6, 14, 114, 115, 119, 158, 165, 177, 187, 193,
+    #                  195, 197, 198, 653, 800, 1096, 1100, 1255, 1256, 1257,
+    #                  1258, 1263, 1266, 1269, 1297, 1342, 1343, 1350, 1353, 2017,
+    #                  2091, 2436, 3039, 3105, 3106, 3108, 4071, 4072, 4073, 4074,
+    #                  4075, 4076, 4077, 4078, 4079, 4080, 4081, 5216, 5217, 5221,
+    #                  5222, 5223, 5224, 5225, 5304, 5305, 5308, 5311, 5312, 5313,
+    #                  5689]
+
+    outlier_index = [14, 16, 17, 114, 115, 137, 165, 187, 354, 653,
+                     1577, 2427, 2428, 2434, 2436, 2772, 2793, 2841, 2978, 3108,
+                     3848, 3849, 3850, 3851, 3852, 3854, 3855, 3856, 3857, 3858,
+                     3859, 3878, 4071, 4073, 4074, 4075, 4076, 4080, 4501, 4551,
+                     4717, 5217, 5221, 5223, 5224, 5304, 5311, 5312, 5313, 5692,
+                     5694, 5695, 5696, 5699, 6598]
+
     feature_use = np.delete(feature_use, outlier_index, axis=0)
     # name_list从series转化为ndarray
     name_list = name_list.values
     name_list = np.delete(name_list, outlier_index, axis=0)
+
+    # 将feature_use进行正态标准化处理
+    feature_use = feature_normalize(feature_use)
 
     # 进行K聚类
     centroids, clusterAssment = Kmeans(feature_use)

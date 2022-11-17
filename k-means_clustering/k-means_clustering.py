@@ -163,7 +163,19 @@ import pandas as pd
 pd.reset_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)
 feature = pd.read_excel(r'./input/feature.xls')
-col = feature.columns[10:-1]
+# col = feature.columns[10:-1]
+col = ['Leq_mean', 'Leq_std', 'Leq_25', 'Leq_median',
+       'Leq_75', 'Leq_10-Leq_90', 'Loudness_mean', 'Loudness_std',
+       'Loudness_25', 'Loudness_median', 'Loudness_75',
+       'Loudness_10-Loudness_90', 'Roughness_mean', 'Roughness_std',
+       'Roughness_25', 'Roughness_median', 'Roughness_75',
+       'Roughness_10-Roughness_90', 'Sharpness_mean', 'Sharpness_std',
+       'Sharpness_25', 'Sharpness_median', 'Sharpness_75',
+       'Sharpness_10-Sharpness_90', 'Fluct_mean', 'Fluct_std', 'Fluct_25',
+       'Fluct_median', 'Fluct_75', 'Fluct_10-Fluct_90', 'Tonality_mean',
+       'Tonality_std', 'Tonality_25', 'Tonality_median', 'Tonality_75',
+       'Tonality_10-Tonality_90', 'leq_w', 'leq_esm', 'sharpness_slop2', 'tonality_esm',
+       'tonality_phimax', 'crz']
 name = feature.columns[1]
 # col = np.insert(col, 0, name)
 feature_use = feature[col]
@@ -217,7 +229,8 @@ def init_centroid(dataset):
     # centroid[0, :] = dataset[4067, :]
     # centroid[0, :] = dataset[241, :]
 
-    centroid[0, :] = dataset[6550, :]
+    # 209-L-5.wav
+    centroid[0, :] = dataset[1161, :]
 
     centroid_0 = centroid[0, :]
 
@@ -322,12 +335,20 @@ if __name__ == '__main__':
     #                  5222, 5223, 5224, 5225, 5304, 5305, 5308, 5311, 5312, 5313,
     #                  5689]
 
-    outlier_index = [14, 16, 17, 114, 115, 137, 165, 187, 354, 653,
-                     1577, 2427, 2428, 2434, 2436, 2772, 2793, 2841, 2978, 3108,
-                     3848, 3849, 3850, 3851, 3852, 3854, 3855, 3856, 3857, 3858,
-                     3859, 3878, 4071, 4073, 4074, 4075, 4076, 4080, 4501, 4551,
-                     4717, 5217, 5221, 5223, 5224, 5304, 5311, 5312, 5313, 5692,
-                     5694, 5695, 5696, 5699, 6598]
+    # outlier_index = [14, 16, 17, 114, 115, 137, 165, 187, 354, 653,
+    #                  1577, 2427, 2428, 2434, 2436, 2772, 2793, 2841, 2978, 3108,
+    #                  3848, 3849, 3850, 3851, 3852, 3854, 3855, 3856, 3857, 3858,
+    #                  3859, 3878, 4071, 4073, 4074, 4075, 4076, 4080, 4501, 4551,
+    #                  4717, 5217, 5221, 5223, 5224, 5304, 5311, 5312, 5313, 5692,
+    #                  5694, 5695, 5696, 5699, 6598]
+
+    outlier_index = [76, 77, 114, 115, 146, 147, 161, 162, 187, 205,
+                     206, 236, 237, 244, 245, 1096, 1098, 1099, 1100, 1175,
+                     1183, 1188, 1254, 1255, 1256, 1257, 1258, 1263, 1265, 1266,
+                     1267, 1268, 1269, 1270, 1274, 1342, 1343, 1346, 1348, 1349,
+                     1350, 1353, 2017, 3039, 4071, 4072, 4073, 4074, 4075, 4076,
+                     4077, 4078, 4079, 4080, 4081, 5216, 5217, 5221, 5222, 5223,
+                     5224, 5225, 5304, 5305, 5307, 5308, 5309, 5311, 5312, 5313]
 
     feature_use = np.delete(feature_use, outlier_index, axis=0)
     # name_list从series转化为ndarray
@@ -351,7 +372,7 @@ if __name__ == '__main__':
     name_list.columns = ['25s_file_name']
     clusterAssment.columns = ['level', 'distance']
     clusterAssment = pd.concat([name_list, clusterAssment], axis=1)
-    col = feature.columns[10:-1]
+    # col = feature.columns[10:-1]
     centroids.columns = col
-    centroids.to_csv(r"./output/centroids.csv")
-    clusterAssment.to_csv(r"./output/clusterAssment.csv")
+    centroids.to_csv(r"./output/centroids_42_features.csv")
+    clusterAssment.to_csv(r"./output/clusterAssment_42_features.csv")

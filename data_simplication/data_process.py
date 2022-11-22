@@ -7,7 +7,7 @@ import numpy as np
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    score = pd.read_excel(r'./input/原始数据211.xlsx')
+    score = pd.read_excel(r'./input/原始数据242.xlsx')
     # represent the number of people
     num_person = score.shape[0]
     noise = '请对您听到的声音，表达您的吵闹感受，1表示非常吵闹，9表示一点也不吵闹'
@@ -31,7 +31,7 @@ if __name__ == '__main__':
         temp.columns = new_columns
         temp['序号'] = np.ones(num_person) * (i + 1)
         data = pd.concat([data, temp])
-    writer = pd.ExcelWriter(r'./output/处理后数据211_精简版.xlsx')
+    writer = pd.ExcelWriter(r'./output/处理后数据242_精简版.xlsx')
     data.to_excel(writer, float_format='%.5f')
     writer.save()
     writer.close()

@@ -230,7 +230,10 @@ def init_centroid(dataset):
     # centroid[0, :] = dataset[241, :]
 
     # 209-L-5.wav
-    centroid[0, :] = dataset[1161, :]
+    # centroid[0, :] = dataset[1161, :]
+
+    # 673-L-5.wav
+    centroid[0, :] = dataset[6352, :]
 
     centroid_0 = centroid[0, :]
 

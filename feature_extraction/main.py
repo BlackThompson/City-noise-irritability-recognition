@@ -152,7 +152,6 @@ if __name__ == '__main__':
 
     params_dict["name"] = os.path.basename(path)
     a = pd.DataFrame(params_dict, [0])
-
     write_path = r"E:\Python\Code\my_noise_recognize\feature_extraction\output\feature_extraction.xlsx"
 
     from openpyxl import load_workbook

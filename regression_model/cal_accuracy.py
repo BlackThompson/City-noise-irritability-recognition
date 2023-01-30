@@ -24,18 +24,22 @@ def classify(predict, true):
         predict_class = round((predict_class + true_class) / 2, 0)
         true_class = predict_class
 
-    # if the predict score and true score is in class-2 and class-3
-    # and their difference is less than (5.3 - 4.4) = 0.9
-    if (predict_class == 2 and true_class == 3) or (predict_class == 3 and true_class == 2):
-        if abs(predict - true) < 0.9:
-            predict_class = true_class
-
     # the vague section is not near the category section
     if abs(predict_class - true_class) >= 1:
         if predict_class not in category:
             predict_class = int(predict_class)
         if true_class not in category:
             true_class = int(true_class)
+
+    # if the predict score and true score is in class-2 and class-3
+    # and their difference is less than (5.3 - 4.4) = 0.9
+    if (predict_class == 2 and true_class == 3) or (predict_class == 3 and true_class == 2):
+        if abs(predict - true) < 0.9:
+            predict_class = true_class
+
+    if (predict_class == 4 and true_class == 3) or (predict_class == 3 and true_class == 4):
+        if abs(predict - true) < 0.8:
+            predict_class = true_class
 
     return int(predict_class), int(true_class)
 

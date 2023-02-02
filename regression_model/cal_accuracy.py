@@ -80,3 +80,14 @@ def accuracy(predict_class_list, true_class_list):
         if predict_class_list[i] == true_class_list[i]:
             same += 1
     return same / all
+
+
+def return_predict_and_true_class(predict_score_list, true_score_list):
+    predict_class_list = []
+    true_class_list = []
+    for i in range(len(predict_score_list)):
+        # predict, true = classify(predict_score_list.iloc[i], true_score_list.iloc[i])
+        predict, true = classify(predict_score_list[i], true_score_list[i])
+        predict_class_list.append(predict)
+        true_class_list.append(true)
+    return predict_class_list, true_class_list

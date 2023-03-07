@@ -17,14 +17,15 @@ def feature_normalize(dataset):
 
 def load_train(path):
     dataset = pd.read_csv(path)
-    train_X = feature_normalize(dataset[column_36])
+    # train_X = feature_normalize(dataset[column_36])
+    train_X = feature_normalize(dataset[column_all])
     train_y = dataset['score']
     return train_X, train_y
 
 
 def load_test(path):
     dataset = pd.read_csv(path)
-    test_X = feature_normalize(dataset[column_36])
+    # test_X = feature_normalize(dataset[column_36])
+    test_X = feature_normalize(dataset[column_all])
     test_y = dataset['score']
     return test_X, test_y
-

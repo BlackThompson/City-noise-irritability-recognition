@@ -57,6 +57,7 @@ def classify(predict_score, true_score):
 
     # 2. If the intersection of two set is not empty
     if predict_set & true_set:
+        # min() 只是为了把值取出来
         predict_class = min(predict_set.intersection(true_set))
         true_class = predict_class
 
@@ -94,12 +95,15 @@ def pre_classify(score):
         category = {4}
     elif 3.8 <= score <= 4.3:
         category = {3, 4}
-    elif 4.3 < score < 4.6:
-        category = {3}
-    elif 4.6 <= score <= 5:
+    # elif 4.3 < score < 4.6:
+    #     category = {3}
+    # elif 4.6 <= score <= 5:
+    #     category = {2, 3}
+    # elif 5 < score < 5.6:
+    #     category = {2}
+    # Include all the type 2 and type 3 points into the fuzzy interval
+    elif 4.3 < score < 5.6:
         category = {2, 3}
-    elif 5 < score < 5.6:
-        category = {2}
     elif 5.6 <= score <= 6:
         category = {1, 2}
     elif score > 6:
